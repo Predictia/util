@@ -1,7 +1,9 @@
 util
 ====
 
-General purpose utilities library
+General purpose library with helper classes for working with tabular data, dates, and dealing with unreliable resources: controlled timeout and retry support. Checkout the API for more information:
+
+http://predictia.github.io/util/apidocs/index.html
 
 Import as maven dependency
 --------------------------
