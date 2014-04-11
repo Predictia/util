@@ -1,0 +1,26 @@
+-classpath
+'/tmp/util/target/classes:/tmp/util/target/test-classes:/home/kktuax/.m2/repository/log4j/log4j/1.2.12/log4j-1.2.12.jar:/home/kktuax/.m2/repository/commons-io/commons-io/2.4/commons-io-2.4.jar:/home/kktuax/.m2/repository/com/google/guava/guava/14.0.1/guava-14.0.1.jar:/home/kktuax/.m2/repository/org/apache/commons/commons-lang3/3.1/commons-lang3-3.1.jar:/home/kktuax/.m2/repository/joda-time/joda-time/2.1/joda-time-2.1.jar:/home/kktuax/.m2/repository/commons-logging/commons-logging/1.1.1/commons-logging-1.1.1.jar:/home/kktuax/.m2/repository/commons-beanutils/commons-beanutils/1.8.3/commons-beanutils-1.8.3.jar:/home/kktuax/.m2/repository/org/slf4j/slf4j-log4j12/1.6.1/slf4j-log4j12-1.6.1.jar:/home/kktuax/.m2/repository/org/slf4j/slf4j-api/1.6.1/slf4j-api-1.6.1.jar:/home/kktuax/.m2/repository/junit/junit/4.8.2/junit-4.8.2.jar'
+-encoding
+'UTF-8'
+-protected
+-sourcepath
+'/tmp/util/src/test/java'
+-author
+-bottom
+'Copyright &#169; 2014 <a href="http://www.predictia.es">Predictia</a>. All Rights Reserved.'
+-charset
+'UTF-8'
+-d
+'/tmp/util/target/site/testapidocs'
+-docencoding
+'UTF-8'
+-doctitle
+'util 0.0.67 Test API'
+-link
+'../apidocs'
+-link
+'http://java.sun.com/j2se/1.5.0/docs/api'
+-use
+-version
+-windowtitle
+'util 0.0.67 Test API'
