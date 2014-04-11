@@ -1,0 +1,33 @@
+#!parentChildProperty roles
+#!parentProperties UNAME=username
+#!childProperties RNAME=name
+#!data RNAME;UNAME
+ROLE_USER;modelo
+ROLE_ADMIN;admin
+ROLE_USER;admin
+ROLE_EDITOR;admin
+ROLE_USER;user
+ROLE_EDITOR;orencio
+ROLE_USER;orencio
+ROLE_ADMIN;antonio
+ROLE_ADMIN;marian
+ROLE_USER;marian
+ROLE_USER;icmbd_andalucia
+ROLE_USER;icmbd_aragon
+ROLE_USER;icmbd_asturias
+ROLE_USER;icmbd_baleares
+ROLE_USER;icmbd_canarias
+ROLE_USER;icmbd_cantabria
+ROLE_USER;icmbd_castillayleon
+ROLE_USER;icmbd_castillalamancha
+ROLE_USER;icmbd_cataluña
+ROLE_USER;icmbd_cvalenciana
+ROLE_USER;icmbd_extremadura
+ROLE_USER;icmbd_galicia
+ROLE_USER;icmbd_madrid
+ROLE_USER;icmbd_murcia
+ROLE_USER;icmbd_pvasco
+ROLE_USER;icmbd_larioja
+ROLE_USER;icmbd_cfnavarra
+ROLE_USER;icmbd_insalud.es
+ROLE_USER;icmbd_insalud.es

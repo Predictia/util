@@ -1,0 +1,6 @@
+#!class es.predictia.util.parser.Role
+#!properties RNAME=name
+#!data RID;RNAME
+ 2;ROLE_EDITOR
+ 0;ROLE_USER
+ 1;ROLE_ADMIN

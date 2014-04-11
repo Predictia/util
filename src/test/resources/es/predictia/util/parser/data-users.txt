@@ -1,0 +1,32 @@
+#!class es.predictia.util.parser.User
+#!properties UNAME=username;PASSWORD=password;MAIL=email;ACTIVE=active
+#!data U_ID;UNAME;PASSWORD;MAIL;ACTIVE;PADRE_ID
+ 3;modelo;aaa8cd7359bb14324229c99ff6e273ab;; 1;
+ 0;admin;d0d50fbf63607c93ec29f515ac4e580c;; 1;
+ 1;user;aaa8cd7359bb14324229c99ff6e273ab;; 1;
+ 5;gromero;7cc35058befc7a511ef55899af84d32f;; 1;
+ 101;orencio;aaa8cd7359bb14324229c99ff6e273ab;; 1;
+ 102;antonio;45f95f1829f67632421172a978c62cac;antonio.cofino@unican.es; 1;
+ 103;marian;aaa8cd7359bb14324229c99ff6e273ab;mgogorcena@msps.es; 1;
+ 104;canarias;aaa8cd7359bb14324229c99ff6e273ab;olopez@innovasalud.es; 1;
+ 106;icmbd_andalucia;f8648b010f8ba8f7c66750cc46c697cc;jantonio.goicoechea@juntadeandalucia.es; 1;
+ 107;icmbd_aragon;f8cde408a796530897c6b92610fdfda7;farribas@aragob.es; 1;
+ 108;icmbd_asturias;9cf0734d450ff2b6c51016680f8fbadd;ana.roces.@sespa.princast.es; 1;
+ 109;icmbd_baleares;689626c08912eaaa5ce326cde8d2abc4;mjsantos@dgpif.caib.es; 1;
+ 110;icmbd_canarias;167908c8f608fadc02656798a4cad8d8;hsanjan@gobiernodecanarias.org; 1;
+ 111;icmbd_cantabria;7cc35058befc7a511ef55899af84d32f;romero_gm@gobcantabria.es; 1;
+ 112;icmbd_castillayleon;ed1e164c74f9a43e74bb6255bbe93c4d;sanarelu@jcyl.es; 1;
+ 113;icmbd_castillalamancha;ea7e9a7678399b980e58700f829076b8;magarcias@jccm.es; 1;
+ 114;icmbd_cataluña;06ee0834eda93dcf9d2a86f650d1268b;mbustins@catsalut.net; 1;
+ 115;icmbd_cvalenciana;b3ab95344d5ca6a5a04f220dffe38ecc;calabuig_jul@gva.es; 1;
+ 116;icmbd_extremadura;5a340d4d700b79706aa953aa0e6be955;vicente.alonso@ses.juntaex.es; 1;
+ 117;icmbd_galicia;59bffe575842931d7b48605135de5536;consuelo.carballeira.roca@sergas.es; 1;
+ 118;icmbd_madrid;9af2bfc6fd99a877791376f8c2dab6c5;julia.rubio@salud.madrid.org; 1;
+ 119;icmbd_murcia;284c4ba73187385c77204e07636385e2;lauro.hernando@carm.es; 1;
+ 120;icmbd_cfnavarra;d033e21ec693387952576a59ce5a9bfc;aarrazoa@cfnavarra.es; 1;
+ 121;icmbd_pvasco;fb315f558551d302b789330bf8f1c555;ínfo5-san@ej-gv.es; 1;
+ 122;icmbd_larioja;7918f836846c6cd6727544acf375046d;adolfo.cestafe@larioja.org; 1;
+ 127;icmbd_cantabria;7cc35058befc7a511ef55899af84d32f;csanidad@gobcantabria.es; 1;
+ 124;icmbd_cfnavarra;d033e21ec693387952576a59ce5a9bfc;mguembes@cfnavarra.es; 1;
+ 125;icmbd_insalud.es;e04a6f20fd2119c5f0cefa4d5680b476;fjove@insalud.es; 1;
+ 126;icmbd_insalud.es;5b8736b9447daee9fcd7b9665b66633a;fjove@insalud.es; 1;
