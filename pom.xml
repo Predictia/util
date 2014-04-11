@@ -91,10 +91,6 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
-	<ciManagement>
-	</ciManagement>
-	<developers>
-	</developers>
 	<organization>
 		<name>Predictia</name>
 		<url>http://www.predictia.es</url>
