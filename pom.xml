@@ -4,9 +4,30 @@
 	<groupId>es.predictia</groupId>
 	<artifactId>util</artifactId>
 	<packaging>jar</packaging>
-	<version>0.0.67-SNAPSHOT</version>
+	<version>0.0.67</version>
 	<name>util</name>
 	<url>http://www.predictia.es</url>
+	<properties>
+                <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<github.global.server>github</github.global.server>
+	</properties>
+	<issueManagement>
+		<url>https://github.com/Predictia/util/issues</url>
+		<system>GitHub Issues</system>
+	</issueManagement>
+	<scm>
+		<url>https://github.com/Predictia/util</url>
+		<connection>scm:git:git://github.com/Predictia/util.git</connection>
+		<developerConnection>scm:git:git@github.com:Predictia/util.git</developerConnection>
+	</scm>
+	<developers>
+		<developer>
+			<email>maxilandia@gmail.com</email>
+			<name>Max Tuni</name>
+			<url>https://github.com/kktuax</url>
+			<id>kktuax</id>
+		</developer>
+	</developers>
 	<dependencies>
 		<dependency>
 			<groupId>org.slf4j</groupId>
@@ -98,6 +119,22 @@
 						<goals>
 							<goal>jar</goal>
 						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>com.github.github</groupId>
+				<artifactId>site-maven-plugin</artifactId>
+				<version>0.8</version>
+				<configuration>
+					<message>Creating site for ${project.version}</message>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>site</goal>
+						</goals>
+						<phase>site</phase>
 					</execution>
 				</executions>
 			</plugin>
