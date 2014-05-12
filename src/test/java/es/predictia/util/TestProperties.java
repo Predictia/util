@@ -5,13 +5,16 @@ import java.io.FileReader;
 import java.util.NoSuchElementException;
 
 import junit.framework.Assert;
-import static es.predictia.util.PropertyDefinitions.processLine;
+import static es.predictia.util.PropertyDefinitions.updateLinePropertyValue;
 import static es.predictia.util.PropertyDefinitions.findPropertyValue;
 
 import org.junit.Test;
 
 import com.google.common.base.Charsets;
+import com.google.common.base.Function;
 import com.google.common.collect.Lists;
+
+import es.predictia.util.PropertyDefinitions.Property;
 
 public class TestProperties {
 
@@ -39,27 +42,27 @@ public class TestProperties {
 		{
 			String inline = " miProp = miProp            # mi comentario ";
 			String nuevoVal = "miNuevoVal";
-			Assert.assertEquals(" miProp = miNuevoVal            # mi comentario ", processLine(inline, "miProp", nuevoVal));
+			Assert.assertEquals(" miProp = miNuevoVal            # mi comentario ", updateLinePropertyValue(inline, "miProp", nuevoVal));
 		}{
 			String inline = " miProp2 = miValor2";
 			String nuevoVal = "miNuevoValor2";
-			Assert.assertEquals(" miProp2 = miNuevoValor2", processLine(inline, "miProp2", nuevoVal));
+			Assert.assertEquals(" miProp2 = miNuevoValor2", updateLinePropertyValue(inline, "miProp2", nuevoVal));
 		}{
 			String inline = " miProp3 = \"miValor2\"";
 			String nuevoVal = "miNuevoValor3";
-			Assert.assertEquals(" miProp3 = \"miNuevoValor3\"", processLine(inline, "miProp3", nuevoVal));
+			Assert.assertEquals(" miProp3 = \"miNuevoValor3\"", updateLinePropertyValue(inline, "miProp3", nuevoVal));
 		}{
 			String inline = "experiment_name=\"meteogrid1\"";
 			String nuevoVal = "miNuevoNombre";
-			Assert.assertEquals("experiment_name=\"miNuevoNombre\"", processLine(inline, "experiment_name", nuevoVal));
+			Assert.assertEquals("experiment_name=\"miNuevoNombre\"", updateLinePropertyValue(inline, "experiment_name", nuevoVal));
 		}{
 			String inline = "experiment_name='meteogrid1'";
 			String nuevoVal = "miNuevoNombre";
-			Assert.assertEquals("experiment_name='miNuevoNombre'", processLine(inline, "experiment_name", nuevoVal));
+			Assert.assertEquals("experiment_name='miNuevoNombre'", updateLinePropertyValue(inline, "experiment_name", nuevoVal));
 		}{
 			String inline = "fields                   = 'Q2,T2,GHT,MSLP,PSFC,U10,V10,RAINTOT,Times,UST,PBLH,REGIME',";
 			String nuevoVal = "T2,Q2,PSFC,ACSWDNB,ACLWDNB,RAINTOT,U10,V10,CLDFRA,CLT";
-			Assert.assertEquals("fields                   = 'T2,Q2,PSFC,ACSWDNB,ACLWDNB,RAINTOT,U10,V10,CLDFRA,CLT',", processLine(inline, "fields", nuevoVal));
+			Assert.assertEquals("fields                   = 'T2,Q2,PSFC,ACSWDNB,ACLWDNB,RAINTOT,U10,V10,CLDFRA,CLT',", updateLinePropertyValue(inline, "fields", nuevoVal));
 		}
 	}
 	
@@ -67,9 +70,32 @@ public class TestProperties {
 	public void testFileProperties() throws Exception{
 		File file = File.createTempFile("test-", ".txt");
 		Streams.writeLinesToFile(Lists.newArrayList("a = 1", "a = 2"), file, Charsets.UTF_8);
-		String newValue = "25";
-		PropertyDefinitions.updateFileWithProperties(file, Charsets.UTF_8, new PropertyDefinitions.Property("a", newValue));
+		String newValue = "25", fValue = "fValue";
+		PropertyDefinitions.updateFileWithProperties(file, Charsets.UTF_8, 
+			new PropertyDefinitions.Property("a", newValue),
+			new PropertyDefinitions.Property("f", fValue)
+		);
 		Assert.assertEquals(newValue, PropertyDefinitions.findPropertyValue(new FileReader(file), "a"));
+		Assert.assertEquals(fValue, PropertyDefinitions.findPropertyValue(new FileReader(file), "f"));
+	}
+	
+	@Test
+	public void testUpdateFileProperties() throws Exception{
+		File file = File.createTempFile("test-", ".txt");
+		PropertyDefinitions.updateFileWithProperties(file, Charsets.UTF_8, 
+			new PropertyDefinitions.Property("a", "2"),
+			new PropertyDefinitions.Property("b", "3")
+		);
+		Assert.assertEquals("2", PropertyDefinitions.findPropertyValue(new FileReader(file), "a"));
+		Assert.assertEquals("3", PropertyDefinitions.findPropertyValue(new FileReader(file), "b"));
+		PropertyDefinitions.updateFileWithProperties(file, Charsets.UTF_8, new Function<Property, Property>() {
+			@Override
+			public Property apply(Property input) {
+				return new Property(input.getName(), input.getName() + input.getValue());
+			}
+		});
+		Assert.assertEquals("a2", PropertyDefinitions.findPropertyValue(new FileReader(file), "a"));
+		Assert.assertEquals("b3", PropertyDefinitions.findPropertyValue(new FileReader(file), "b"));
 	}
 	
 }

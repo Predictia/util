@@ -14,6 +14,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Map;
@@ -29,6 +30,8 @@ import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.filefilter.FileFilterUtils;
 import org.apache.commons.io.filefilter.IOFileFilter;
 import org.joda.time.DateTime;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.google.common.base.CharMatcher;
 
@@ -238,7 +241,6 @@ public class Files{
 		zout.close();
 	}
 	
-	@SuppressWarnings("unchecked")
 	private static class RelativePath {
 		/**
 		 * break a path down into individual elements and add to a list. example
@@ -249,8 +251,8 @@ public class Files{
 		 * @return a List collection with the individual elements of the path in
 		 *         reverse order
 		 */
-		private static List getPathList(File f) {
-			List l = new ArrayList();
+		private static List<String> getPathList(File f) {
+			List<String> l = new ArrayList<String>();
 			File r;
 			try {
 				r = f.getCanonicalFile();
@@ -259,8 +261,8 @@ public class Files{
 					r = r.getParentFile();
 				}
 			} catch (IOException e) {
-				e.printStackTrace();
-				l = null;
+				LOGGER.warn(e.getMessage());
+				l = Collections.emptyList();
 			}
 			return l;
 		}
@@ -271,7 +273,7 @@ public class Files{
 		 * @param r home path
 		 * @param f path of file
 		 */
-		private static String matchPathLists(List r, List f) {
+		private static String matchPathLists(List<String> r, List<String> f) {
 			int i;
 			int j;
 			StringBuilder s = new StringBuilder();
@@ -309,8 +311,8 @@ public class Files{
 		 * @return path from home to f as a string
 		 */
 		public static String getRelativePath(File home, File f) {
-			List homelist = getPathList(home);
-			List filelist = getPathList(f);
+			List<String> homelist = getPathList(home);
+			List<String> filelist = getPathList(f);
 			return matchPathLists(homelist, filelist);
 		}
 	}
@@ -332,5 +334,7 @@ public class Files{
 		fileFilter = FileFilterUtils.ageFileFilter(dateLimit.toDate());		
 		return FileUtils.listFiles(folder, fileFilter, null);
 	}
+	
+	private static final Logger LOGGER = LoggerFactory.getLogger(Files.class);
 	
 }
