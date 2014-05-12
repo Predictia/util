@@ -4,11 +4,11 @@
 	<groupId>es.predictia</groupId>
 	<artifactId>util</artifactId>
 	<packaging>jar</packaging>
-	<version>0.0.67</version>
+	<version>0.0.68-SNAPSHOT</version>
 	<name>util</name>
 	<url>http://www.predictia.es</url>
 	<properties>
-                <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<github.global.server>github</github.global.server>
 	</properties>
 	<issueManagement>
