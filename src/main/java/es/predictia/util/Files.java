@@ -59,7 +59,7 @@ public class Files{
 	 * @param path
 	 *            The path for which to retrieve the parent
 	 * 
-	 * @return The parent path. /sub/sub2/index.html -> /sub/sub2/ If the given
+	 * @return The parent path. /sub/sub2/index.html --TO-- /sub/sub2/ If the given
 	 *         path is the root path ("/" or ""), return "/".
 	 */
 	public static String getDirectoryPath(String path) {

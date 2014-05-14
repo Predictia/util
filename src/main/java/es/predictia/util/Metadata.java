@@ -178,8 +178,6 @@ public class Metadata implements Serializable {
 	}
 	
 	/** Inserta una nueva variable o actualiza su valor al indicado
-	 * @param variable
-	 * @param nuevoValor
 	 * @return Metadata actualizado
 	 */
 	public String setVariableList(String variable, List<String> nuevosValores){

@@ -61,7 +61,7 @@ public class Beans {
 	 * Finds in a list of beans for the ones whos property is contained in
 	 * values
 	 * 
-	 * @param <T>
+	 * @param <T> bean type
 	 * @param beans
 	 *            Input search list
 	 * @param property

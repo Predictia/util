@@ -1,5 +1,12 @@
 package es.predictia.util;
 
+import com.google.common.base.Stopwatch;
+
+/**
+ * @author Max
+ * @deprecated In favour of guava's {@link Stopwatch}
+ */
+@Deprecated
 public class Cronometro {
 
 	public Cronometro(String nombre){

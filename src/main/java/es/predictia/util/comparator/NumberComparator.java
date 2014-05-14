@@ -11,8 +11,6 @@ public class NumberComparator implements Comparator<Number> {
     private static NumberComparator singleton = null;
 
     /**
-     * Constructor.
-     * <p/>
      * Has protected access to prevent other clients creating instances of the class ... it is stateless so we need only
      * one instance.
      */

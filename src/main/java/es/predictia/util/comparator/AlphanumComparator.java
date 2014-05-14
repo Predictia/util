@@ -61,9 +61,7 @@ public class AlphanumComparator implements Comparator<CharSequence> {
         return charSeq.subSequence(start, index);
     }
 
-    /**
-     * Implements Comparator<CharSequence>.compare
-     */
+    @Override
     public int compare(final CharSequence charSeq1, final CharSequence charSeq2) {
         final int length1 = charSeq1.length();
         final int length2 = charSeq2.length();

@@ -15,10 +15,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.common.base.Function;
+import com.google.common.base.Stopwatch;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
-
-import es.predictia.util.Cronometro;
 
 public class TableTests {
 
@@ -128,7 +127,7 @@ public class TableTests {
 		Collection<Map<String, Integer>> tableData = getRandomData(numberOfRows, Iterables.concat(idxCols, otherCols));
 		IndexedTable<Integer> table = new IndexedTable<Integer>(tableData, idxCols);
 		
-		Cronometro c = new Cronometro("buscar por la tabla");
+		Stopwatch c = new Stopwatch().start();
 		Random random = new Random();
 		for(int i=0;i<numberOfQuerys;i++){
 			Map<String, Integer> randomSearch = new HashMap<String, Integer>();
@@ -137,7 +136,7 @@ public class TableTests {
 			}
 			table.getValue(randomSearch, otherCols.get(random.nextInt(otherCols.size())));
 		}
-		logger.debug(c.toString());
+		logger.debug("buscar por la tabla toook " + c);
 	}
 	
 	private static Collection<Map<String, Integer>> getRandomData(int numRows, Iterable<String> cols){

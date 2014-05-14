@@ -47,9 +47,6 @@ public class Timeouts {
 	}
 	
 	/**
-	 * @param task
-	 * @param timeout
-	 * @param unit
 	 * @throws InterruptedException if timeout happened
 	 * @throws ExecutionException 
 	 */

@@ -51,7 +51,7 @@ public class Table<T> {
 	/** Apply one opperation on each of table's column values
 	 * @param <N>
 	 * @param columnSummaryFunction
-	 * @return Map of <column,summary of column>
+	 * @return Map of (column,summary of column)
 	 */
 	public <N> Map<String, N> getTableSummary(Function<Iterable<T>, N> columnSummaryFunction){
 		Map<String, N> summary = new LinkedHashMap<String, N>();
@@ -222,10 +222,8 @@ public class Table<T> {
 		return newTable;
 	}
 	
-	/**
-	 * @param newColumn
-	 * @param newColumnAllias
-	 * @return Expande una columna de la tabla utilizando una funcion
+	/** Expande una columna de la tabla utilizando una funcion
+	 * 
 	 * @throws IllegalArgumentException si la tabla no dispone de la columna indice de otable 
 	 */
 	public Table<T> createTableWithExpandedColumn(String columnToExpand, Function<T,Map<String,T>> expandFunction, Boolean preserveColumn) throws IllegalArgumentException{
