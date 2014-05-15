@@ -202,7 +202,7 @@ public class PropertyDefinitions {
 		List<String> lineElements = Lists.newArrayList(EQUAL_SPLITTER.split(lineInput));
 		if(lineElements.size() > 1){
 			String property = lineElements.get(0);
-			String value = lineElements.get(1);
+			String value = EQUAL_JOINER.join(lineElements.subList(1, lineElements.size()));
 			if((value.length() > 1) && isQuoute(value.charAt(0))){
 				int lastIndex = value.lastIndexOf(value.charAt(0));
 				if(lastIndex > 0){

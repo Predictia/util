@@ -38,6 +38,20 @@ public class TestProperties {
 	}
 	
 	@Test
+	public void testPropertyValue() throws Exception{
+		{
+			String line = " miProp = miValue            ";
+			Assert.assertEquals("miValue", findPropertyValue(line, "miProp"));
+		}{
+			String line = " miProp = miValue            # mi comentario ";
+			Assert.assertEquals("miValue", findPropertyValue(line, "miProp"));
+		}{
+			String line = " miProp = miProp=2            # mi comentario ";
+			Assert.assertEquals("miProp=2", findPropertyValue(line, "miProp"));
+		}
+	}
+	
+	@Test
 	public void testPropertySet() throws Exception{
 		{
 			String inline = " miProp = miProp            # mi comentario ";
