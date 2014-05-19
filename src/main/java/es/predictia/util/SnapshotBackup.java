@@ -9,6 +9,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Set;
 
@@ -25,12 +26,12 @@ import org.slf4j.LoggerFactory;
 import com.google.common.base.Joiner;
 import com.google.common.base.Optional;
 import com.google.common.base.Splitter;
+import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Multimap;
 import com.google.common.collect.Ordering;
 import com.google.common.collect.Sets;
 import com.google.common.io.Files;
-
-import es.predictia.util.Streams;
 
 /** Store a set of backups of a file in a folder
  * @author Max
@@ -74,7 +75,11 @@ public class SnapshotBackup implements Serializable {
 	}
 	
 	public File newestFile(File folder) throws NoSuchElementException{
-		return REVERSE_ORDERING.min(FileUtils.listFiles(folder, fileFilter, null));
+		return NEWEST_TO_OLDEST_FILE_ORDERING.min(folderFiles(folder));
+	}
+	
+	private Collection<File> folderFiles(File folder){
+		return FileUtils.listFiles(folder, fileFilter, null);
 	}
 	
 	public boolean saveToFolder(File in, File folder) throws IOException{
@@ -149,20 +154,42 @@ public class SnapshotBackup implements Serializable {
 	}
 	
 	public void cleanFolder(File folder, Configuration tbc) throws IOException{
-		Context context = new Context();
-		for(File file : REVERSE_ORDERING.sortedCopy(FileUtils.listFiles(folder, fileFilter, null))){
-			Optional<DateTime> od = getCreationDate(file);
-			if(od.isPresent()){
-				DateTime now = new DateTime();
-				DateTime creationDate = od.get();
-				if(deleteFile(now, creationDate, tbc, context)){
-					LOGGER.info("Cleaning '" + id + "' backup from: " + file);
-					file.delete();
+		Multimap<AgeType, File> filesMap = createFilesMap(folderFiles(folder), tbc);
+		if(!filesMap.isEmpty()){
+			DateTime now = new DateTime();
+			Context context = new Context();
+			AgeType minAgeType = AgeType.minAgeType(filesMap.keys());
+			for(Map.Entry<AgeType, Collection<File>> filesentry : filesMap.asMap().entrySet()){
+				AgeType ageType = filesentry.getKey();
+				Collection<File> ageFiles = filesentry.getValue();
+				// we keep newest file only for minAgeType
+				Ordering<File> ordering = minAgeType.equals(ageType) ? NEWEST_TO_OLDEST_FILE_ORDERING : NEWEST_TO_OLDEST_FILE_ORDERING.reverse();
+				for(File file : ordering.sortedCopy(ageFiles)){
+					DateTime creationDate = getCreationDate(file).get();
+					if(deleteFile(now, creationDate, tbc, context)){
+						LOGGER.info("Cleaning '" + id + "' backup from: " + file);
+						file.delete();
+					}
 				}
 			}
 		}
 	}
 
+	private Multimap<AgeType, File> createFilesMap(Collection<File> files, Configuration tbc){
+		Multimap<AgeType, File> filesMap = ArrayListMultimap.create();
+		DateTime now = new DateTime();
+		for(File file : files){
+			Optional<DateTime> od = getCreationDate(file);
+			if(od.isPresent()){
+				Optional<AgeType> validAgeType = AgeType.getvalidBackupAgeType(tbc, now, od.get());
+				if(validAgeType.isPresent()){
+					filesMap.put(validAgeType.get(), file);
+				}
+			}
+		}
+		return filesMap;
+	}
+	
 	public enum AgeType{
 		
 		day, week, month, year, any;
@@ -211,6 +238,14 @@ public class SnapshotBackup implements Serializable {
 			}
 		}
 		
+		static AgeType minAgeType(Collection<AgeType> presentTypes){
+			return AGE_TYPE_ORDERING.min(presentTypes);
+		}
+		
+		private static final Ordering<AgeType> AGE_TYPE_ORDERING = Ordering.explicit(
+			Lists.newArrayList(Sets.newTreeSet(Lists.newArrayList(AgeType.values())))
+		);
+		
 	}
 	
 	static boolean deleteFile(DateTime now, DateTime creationDate, Configuration tbc, Context context){
@@ -255,7 +290,7 @@ public class SnapshotBackup implements Serializable {
 		}
 	}
 	
-	static class ReverseOrdering extends Ordering<File>{
+	static class FileCreationDateOrdering extends Ordering<File>{
 		@Override
 		public int compare(File left, File right) {
 			Optional<DateTime> od1 = getCreationDate(left);
@@ -269,8 +304,12 @@ public class SnapshotBackup implements Serializable {
 		}
 	}
 	
-	private final transient IOFileFilter fileFilter; 
-	private static final transient ReverseOrdering REVERSE_ORDERING = new ReverseOrdering();
+	private final transient IOFileFilter fileFilter;
+	
+	/**
+	 * From newest (first) to oldest
+	 */
+	private static final transient FileCreationDateOrdering NEWEST_TO_OLDEST_FILE_ORDERING = new FileCreationDateOrdering();
 	private static final transient Joiner DASH_JOINER = Joiner.on("-");
 	private static final transient Joiner DOT_JOINER = Joiner.on(".");
 	private static final transient Splitter DASH_SPLITTER = Splitter.on("-").trimResults().omitEmptyStrings();

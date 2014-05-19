@@ -32,8 +32,16 @@ public class SnapshotBackupTest {
 	}
 	
 	@Test
+	public void testAgeTypeOrdering() throws Exception{
+		Assert.assertEquals(AgeType.month, AgeType.minAgeType(Lists.newArrayList(AgeType.month, AgeType.any)));
+		Assert.assertEquals(AgeType.week, AgeType.minAgeType(Lists.newArrayList(AgeType.month, AgeType.week)));
+		Assert.assertEquals(AgeType.day, AgeType.minAgeType(Lists.newArrayList(AgeType.any, AgeType.day)));
+		Assert.assertEquals(AgeType.day, AgeType.minAgeType(Lists.newArrayList(AgeType.values())));
+	}
+	
+	@Test
 	public void testOrdering() throws Exception{
-		SnapshotBackup.ReverseOrdering ro = new SnapshotBackup.ReverseOrdering();
+		SnapshotBackup.FileCreationDateOrdering ro = new SnapshotBackup.FileCreationDateOrdering();
 		SnapshotBackup tbf = new SnapshotBackup("mybackup.tar.gz");
 		Assert.assertTrue(ro.isOrdered(Lists.newArrayList(
 			getExampleFile(tbf, new DateTime()),
