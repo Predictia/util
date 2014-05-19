@@ -176,31 +176,44 @@ public class SnapshotBackupTest {
 	}
 	
 	@Test
+	public void testNextSavingType() throws Exception{
+		{
+			Configuration conf = new Configuration(AgeType.day, AgeType.any);
+			Assert.assertEquals(AgeType.any, conf.nextSavedType(AgeType.day).get());
+		}{
+			Configuration conf = new Configuration(AgeType.day, AgeType.month, AgeType.any);
+			Assert.assertEquals(AgeType.month, conf.nextSavedType(AgeType.day).get());
+		}{
+			Configuration conf = new Configuration(AgeType.day);
+			Assert.assertFalse(conf.nextSavedType(AgeType.day).isPresent());
+		}
+	}
+	
+	@Test
 	public void testTimedBackupFileDelete() throws Exception{
-		Configuration conf = new Configuration(SnapshotBackup.AgeType.values());
 		{
 			SnapshotBackup.Context ctx = new Context();
 			Assert.assertFalse(ctx.containsType(SnapshotBackup.AgeType.day));
-			Assert.assertFalse(SnapshotBackup.deleteFile(new DateTime(), new DateTime().minusHours(1), conf, ctx));
+			Assert.assertFalse(SnapshotBackup.deleteFile(SnapshotBackup.AgeType.day, ctx));
 			Assert.assertTrue(ctx.containsType(SnapshotBackup.AgeType.day));
-			Assert.assertTrue(SnapshotBackup.deleteFile(new DateTime(), new DateTime().minusHours(1), conf, ctx));
+			Assert.assertTrue(SnapshotBackup.deleteFile(SnapshotBackup.AgeType.day, ctx));
 			Assert.assertTrue(ctx.containsType(SnapshotBackup.AgeType.day));
 		}{
 			SnapshotBackup.Context ctx = new Context();
 			Assert.assertFalse(ctx.containsType(SnapshotBackup.AgeType.week));
 			// first one old file
-			Assert.assertFalse(SnapshotBackup.deleteFile(new DateTime(), new DateTime().minusDays(3), conf, ctx));
+			Assert.assertFalse(SnapshotBackup.deleteFile(SnapshotBackup.AgeType.week, ctx));
 			Assert.assertTrue(ctx.containsType(SnapshotBackup.AgeType.week));
-			Assert.assertTrue(SnapshotBackup.deleteFile(new DateTime(), new DateTime().minusDays(3), conf, ctx));
+			Assert.assertTrue(SnapshotBackup.deleteFile(SnapshotBackup.AgeType.week, ctx));
 			Assert.assertTrue(ctx.containsType(SnapshotBackup.AgeType.week));
 			// then one recent file
 			Assert.assertFalse(ctx.containsType(SnapshotBackup.AgeType.day));
-			Assert.assertFalse(SnapshotBackup.deleteFile(new DateTime(), new DateTime().minusHours(1), conf, ctx));
+			Assert.assertFalse(SnapshotBackup.deleteFile(SnapshotBackup.AgeType.day, ctx));
 			Assert.assertTrue(ctx.containsType(SnapshotBackup.AgeType.day));
 		}{
 			SnapshotBackup.Context ctx = new Context();
-			Assert.assertFalse(SnapshotBackup.deleteFile(new DateTime(), new DateTime().minusYears(2), conf, ctx));
-			Assert.assertTrue(SnapshotBackup.deleteFile(new DateTime(), new DateTime().minusYears(2), conf, ctx));
+			Assert.assertFalse(SnapshotBackup.deleteFile(SnapshotBackup.AgeType.any, ctx));
+			Assert.assertTrue(SnapshotBackup.deleteFile(SnapshotBackup.AgeType.any, ctx));
 		}
 	}
 

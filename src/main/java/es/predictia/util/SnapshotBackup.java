@@ -151,22 +151,32 @@ public class SnapshotBackup implements Serializable {
 		public Set<AgeType> getSavingTypes() {
 			return savingTypes;
 		}
+		
+		Optional<AgeType> nextSavedType(AgeType minAgeType){
+			boolean found = false;
+			for(AgeType type : AgeType.AGE_TYPE_ORDERING.sortedCopy(savingTypes)){
+				if(type.equals(minAgeType)){
+					found = true;
+				}else if(found){
+					return Optional.of(type);
+				}
+			}
+			return Optional.absent();
+		}
 	}
 	
 	public void cleanFolder(File folder, Configuration tbc) throws IOException{
 		Multimap<AgeType, File> filesMap = createFilesMap(folderFiles(folder), tbc);
 		if(!filesMap.isEmpty()){
-			DateTime now = new DateTime();
-			Context context = new Context();
 			AgeType minAgeType = AgeType.minAgeType(filesMap.keys());
+			Context context = new Context();
 			for(Map.Entry<AgeType, Collection<File>> filesentry : filesMap.asMap().entrySet()){
 				AgeType ageType = filesentry.getKey();
 				Collection<File> ageFiles = filesentry.getValue();
 				// we keep newest file only for minAgeType
 				Ordering<File> ordering = minAgeType.equals(ageType) ? NEWEST_TO_OLDEST_FILE_ORDERING : NEWEST_TO_OLDEST_FILE_ORDERING.reverse();
 				for(File file : ordering.sortedCopy(ageFiles)){
-					DateTime creationDate = getCreationDate(file).get();
-					if(deleteFile(now, creationDate, tbc, context)){
+					if(deleteFile(ageType, context)){
 						LOGGER.info("Cleaning '" + id + "' backup from: " + file);
 						file.delete();
 					}
@@ -184,6 +194,21 @@ public class SnapshotBackup implements Serializable {
 				Optional<AgeType> validAgeType = AgeType.getvalidBackupAgeType(tbc, now, od.get());
 				if(validAgeType.isPresent()){
 					filesMap.put(validAgeType.get(), file);
+				}
+			}
+		}
+		if(!filesMap.isEmpty()){
+			AgeType minAgeType = AgeType.minAgeType(filesMap.keys());
+			Collection<File> minAgeTypeFiles = filesMap.get(minAgeType);
+			File newestFile = NEWEST_TO_OLDEST_FILE_ORDERING.min(minAgeTypeFiles);
+			Optional<AgeType> nextAgeType = tbc.nextSavedType(minAgeType);
+			if(nextAgeType.isPresent()){
+				// promote older newest file age type to next type
+				for(File file : minAgeTypeFiles){
+					if(!newestFile.equals(file)){
+						filesMap.remove(minAgeType, file);
+						filesMap.put(nextAgeType.get(), file);
+					}
 				}
 			}
 		}
@@ -248,13 +273,8 @@ public class SnapshotBackup implements Serializable {
 		
 	}
 	
-	static boolean deleteFile(DateTime now, DateTime creationDate, Configuration tbc, Context context){
-		Optional<AgeType> type = AgeType.getvalidBackupAgeType(tbc, now, creationDate);
-		if(type.isPresent()){
-			return !context.saveNewType(type.get());
-		}else{
-			return true;
-		}
+	static boolean deleteFile(AgeType type, Context context){
+		return !context.saveNewType(type);
 	}
 	
 	IOFileFilter ioFileFilter(){
