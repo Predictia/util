@@ -22,7 +22,13 @@ class FileUpdater {
 	}
 	
 	public static void updateFile(File destination, Charset charset, LinesProcessor linesProcessor) throws IOException{
-		LOGGER.info("Updating file: " + destination);
+		if(destination.exists()){
+			LOGGER.info("Updating file: " + destination);
+		}else{
+			destination.createNewFile();
+			LOGGER.info("Writing to file: " + destination);
+		}
+		
 		File tmpFile = File.createTempFile("temp-", ".properties");
 		copy(destination, tmpFile);
 		FileReader reader = new FileReader(tmpFile);
