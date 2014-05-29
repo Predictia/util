@@ -84,6 +84,20 @@ public class PropertyDefinitions {
 	}
 	
 	/**
+	 * @throws IOException 
+	 */
+	public static List<Property> findProperties(Readable readable) throws IOException{
+		List<Property> properties = new ArrayList<PropertyDefinitions.Property>();
+		for(String line : CharStreams.readLines(readable)){
+			Optional<Property> property = parsePropertyValue(line);
+			if(property.isPresent()){
+				properties.add(property.get());
+			}
+		}
+		return properties;
+	}
+	
+	/**
 	 * @throws NoSuchElementException
 	 * @throws IOException 
 	 */
