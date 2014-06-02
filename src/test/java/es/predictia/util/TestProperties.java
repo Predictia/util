@@ -52,6 +52,13 @@ public class TestProperties {
 	}
 	
 	@Test
+	public void testPropertyQuotesSet() throws Exception{
+		String inline = " ENVIRONMENT='PPN = 30' ";
+		String nuevoVal = "PPN = 15";
+		Assert.assertEquals(" ENVIRONMENT='PPN = 15' ", updateLinePropertyValue(inline, "ENVIRONMENT", nuevoVal));
+	}
+	
+	@Test
 	public void testPropertySet() throws Exception{
 		{
 			String inline = " miProp = miProp            # mi comentario ";

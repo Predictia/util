@@ -213,10 +213,10 @@ public class PropertyDefinitions {
 	static Optional<Property> parsePropertyValue(String line){
 		List<String> lineComments = Lists.newArrayList(COMMENT_SPLITTER.split(line));
 		String lineInput = lineComments.isEmpty() ? line : lineComments.get(0);
-		List<String> lineElements = Lists.newArrayList(EQUAL_SPLITTER.split(lineInput));
-		if(lineElements.size() > 1){
-			String property = lineElements.get(0);
-			String value = EQUAL_JOINER.join(lineElements.subList(1, lineElements.size()));
+		int idx = lineInput.indexOf("=");
+		if((idx > 0) && (idx < lineInput.length())){
+			String property = lineInput.substring(0, idx).trim();
+			String value = lineInput.substring((idx + 1)).trim();
 			if((value.length() > 1) && isQuoute(value.charAt(0))){
 				int lastIndex = value.lastIndexOf(value.charAt(0));
 				if(lastIndex > 0){
@@ -240,7 +240,6 @@ public class PropertyDefinitions {
 	    return prefix+rest;
 	}
 	
-	private static final transient Splitter EQUAL_SPLITTER = Splitter.on("=").trimResults().omitEmptyStrings();
 	private static final transient Joiner EQUAL_JOINER = Joiner.on("=").skipNulls();
 	private static final transient Splitter COMMENT_SPLITTER = Splitter.on("#").trimResults();
 	private static final transient Logger LOGGER = LoggerFactory.getLogger(PropertyDefinitions.class);
