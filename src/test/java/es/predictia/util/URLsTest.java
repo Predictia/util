@@ -11,6 +11,15 @@ import es.predictia.util.backoff.BackOff;
 public class URLsTest {
 
 	@Test @Ignore("external resource")
+	public void testAuthUrlContent() throws Exception{
+		URL url = new URL("http://credentialsurl");
+		String content = new URLs.UrlContentSupplier(url)
+			.withBasicAuth("user", "pw")
+			.getContent();
+		Assert.assertTrue(content.length() > 0);
+	}
+	
+	@Test @Ignore("external resource")
 	public void testUrlContent() throws Exception{
 		String content = URLs.getUrlContent(new URL("http://www.predictia.es/"), 5000);
 		Assert.assertTrue(content.length() > 0);
