@@ -199,7 +199,7 @@ public class SnapshotBackup implements Serializable {
 		}
 		if(!filesMap.isEmpty()){
 			AgeType minAgeType = AgeType.minAgeType(filesMap.keys());
-			Collection<File> minAgeTypeFiles = filesMap.get(minAgeType);
+			Collection<File> minAgeTypeFiles = Lists.newArrayList(filesMap.get(minAgeType));
 			File newestFile = NEWEST_TO_OLDEST_FILE_ORDERING.min(minAgeTypeFiles);
 			Optional<AgeType> nextAgeType = tbc.nextSavedType(minAgeType);
 			if(nextAgeType.isPresent()){
