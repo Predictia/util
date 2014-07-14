@@ -6,6 +6,7 @@ import java.io.Reader;
 import java.io.StringReader;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -179,6 +180,30 @@ public class PropertyDefinitions {
 		remainingProperties.removeAll(processedProperties);
 		for(Property remainingProperty : remainingProperties){
 			processedLines.add(remainingProperty.toString());
+		}
+		return processedLines;
+	}
+	
+	public static void updateFileWithoutProperties(File destination, Charset charset, final Collection<String> propertyNamesToDelete) throws IOException{
+		FileUpdater.updateFile(destination, charset, new FileUpdater.LinesProcessor() {
+			@Override
+			public List<String> newLines(Reader reader) throws IOException {
+				return deleteProperties(reader, propertyNamesToDelete);
+			}
+		});
+	}
+	
+	public static List<String> deleteProperties(Readable readable, Collection<String> propertyNamesToDelete) throws IOException{
+		List<String> processedLines = new ArrayList<String>();
+		for(String line : CharStreams.readLines(readable)){
+			Optional<Property> sourcePropertyOptional = parsePropertyValue(line);
+			if(sourcePropertyOptional.isPresent()){
+				Property sourceProperty = sourcePropertyOptional.get();
+				if(propertyNamesToDelete.contains(sourceProperty.getName())){
+					continue;
+				}
+			}
+			processedLines.add(line);
 		}
 		return processedLines;
 	}

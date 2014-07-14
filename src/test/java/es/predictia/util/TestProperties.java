@@ -2,6 +2,8 @@ package es.predictia.util;
 
 import java.io.File;
 import java.io.FileReader;
+import java.io.StringReader;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 import junit.framework.Assert;
@@ -12,6 +14,7 @@ import org.junit.Test;
 
 import com.google.common.base.Charsets;
 import com.google.common.base.Function;
+import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
 
 import es.predictia.util.PropertyDefinitions.Property;
@@ -25,6 +28,33 @@ public class TestProperties {
 		Assert.assertNotNull(findPropertyValue(in, "MaxLat"));
 		Assert.assertNotNull(findPropertyValue(in, "MinLon"));
 		Assert.assertNotNull(findPropertyValue(in, "MaxLon"));
+	}
+	
+	@Test
+	public void testDeleteProperties() throws Exception{
+		List<String> propertyNames = Lists.newArrayList("MinLat", "MaxLat", "MinLon", "MaxLon");
+		String in = "MinLat = 32.4425\nMinLon = 4.31796\nMaxLat = 53.2517\nMaxLon = 34.0674";
+		for(String propertyNameToDelete : propertyNames){
+			String out = Joiner.on("\n").join(
+				PropertyDefinitions.deleteProperties(new StringReader(in), Lists.newArrayList(propertyNameToDelete))
+			);
+			List<Property> properties = PropertyDefinitions.findProperties(new StringReader(out));
+			Assert.assertEquals(3, properties.size());
+			for(String propertyName : propertyNames){
+				if(!propertyName.equals(propertyNameToDelete)){
+					Assert.assertNotNull(findPropertyValue(out, propertyName));
+				}
+			}
+		}
+	}
+	
+	@Test
+	public void testDeleteAllProperties() throws Exception{
+		List<String> propertyNames = Lists.newArrayList("MinLat", "MaxLat", "MinLon", "MaxLon");
+		String in = "MinLat = 32.4425\nMinLon = 4.31796\nMaxLat = 53.2517\nMaxLon = 34.0674";
+		Assert.assertTrue(
+			PropertyDefinitions.deleteProperties(new StringReader(in), Lists.newArrayList(propertyNames)).isEmpty()
+		);
 	}
 	
 	@Test(expected=NoSuchElementException.class)
