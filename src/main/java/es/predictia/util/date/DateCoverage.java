@@ -74,11 +74,11 @@ public class DateCoverage {
 	}
 
 	public static DateCoverage getDateCoverage(Iterable<? extends DateTime> dates){
-		return new DateCoverage(DateProviders.getDateProviderList(dates));
+		return new DateCoverage(DateProviders.dateProvidersFromDateTime(dates));
 	}
 	
 	public static DateCoverage getIntervalCoverage(Iterable<? extends Interval> intervals){
-		return new DateCoverage(DateProviders.getDateProviderListFromInterval(intervals));
+		return new DateCoverage(DateProviders.dateProvidersFromIntervals(intervals));
 	}
 	
 	private static Interval getInterval(Iterable<? extends DateProvider> fechas){

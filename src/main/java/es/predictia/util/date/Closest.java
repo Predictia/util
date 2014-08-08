@@ -46,7 +46,7 @@ public class Closest<T extends DateProvider> {
 
 	public static DateTime getClosestDate(Iterable<? extends DateTime> dates, final DateTime date){
     	Closest<DateProvider> c = new Closest<DateProvider>(
-    		DateProviders.getDateProviderList(dates), 
+    		DateProviders.dateProvidersFromDateTime(dates), 
     		new DateProvider() {
 				public DateTime getDate() {
 					return date;
