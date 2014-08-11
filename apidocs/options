@@ -1,23 +1,23 @@
 -classpath
-'/home/kktuax/workspaces/wrf/util/target/classes:/home/kktuax/.m2/repository/commons-io/commons-io/2.4/commons-io-2.4.jar:/home/kktuax/.m2/repository/com/google/guava/guava/14.0.1/guava-14.0.1.jar:/home/kktuax/.m2/repository/org/apache/commons/commons-lang3/3.1/commons-lang3-3.1.jar:/home/kktuax/.m2/repository/joda-time/joda-time/2.1/joda-time-2.1.jar:/home/kktuax/.m2/repository/commons-logging/commons-logging/1.1.1/commons-logging-1.1.1.jar:/home/kktuax/.m2/repository/commons-beanutils/commons-beanutils/1.8.3/commons-beanutils-1.8.3.jar:/home/kktuax/.m2/repository/org/slf4j/slf4j-api/1.6.1/slf4j-api-1.6.1.jar'
+'/home/kktuax/workspaces/roadcast/lib-util/target/classes:/home/kktuax/.m2/repository/commons-io/commons-io/2.4/commons-io-2.4.jar:/home/kktuax/.m2/repository/com/google/guava/guava/14.0.1/guava-14.0.1.jar:/home/kktuax/.m2/repository/org/apache/commons/commons-lang3/3.1/commons-lang3-3.1.jar:/home/kktuax/.m2/repository/joda-time/joda-time/2.1/joda-time-2.1.jar:/home/kktuax/.m2/repository/commons-logging/commons-logging/1.1.1/commons-logging-1.1.1.jar:/home/kktuax/.m2/repository/commons-beanutils/commons-beanutils/1.8.3/commons-beanutils-1.8.3.jar:/home/kktuax/.m2/repository/org/slf4j/slf4j-api/1.6.1/slf4j-api-1.6.1.jar'
 -encoding
 'UTF-8'
 -protected
 -sourcepath
-'/home/kktuax/workspaces/wrf/util/src/main/java'
+'/home/kktuax/workspaces/roadcast/lib-util/src/main/java'
 -author
 -bottom
 'Copyright &#169; 2014 <a href="http://www.predictia.es">Predictia</a>. All Rights Reserved.'
 -charset
 'UTF-8'
 -d
-'/home/kktuax/workspaces/wrf/util/target/site/apidocs'
+'/home/kktuax/workspaces/roadcast/lib-util/target/site/apidocs'
 -docencoding
 'UTF-8'
 -doctitle
 'util 0.0.68-SNAPSHOT API'
 -linkoffline
-'http://download.oracle.com/javase/1.5.0/docs/api' '/home/kktuax/workspaces/wrf/util/target/javadoc-bundle-options'
+'http://download.oracle.com/javase/1.5.0/docs/api' '/home/kktuax/workspaces/roadcast/lib-util/target/javadoc-bundle-options'
 -use
 -version
 -windowtitle
