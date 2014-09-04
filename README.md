@@ -24,6 +24,6 @@ And the dependency itself
       <dependency>
         <groupId>es.predictia</groupId>
         <artifactId>util</artifactId>
-        <version>0.0.67</version>
+        <version>0.0.68</version>
       </dependency>
     </dependencies>
