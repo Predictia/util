@@ -127,12 +127,11 @@ public class Beans {
 		return salida;
 	}
 
-	@SuppressWarnings("unchecked")
 	public static String toString(Object bean) {
 		StringBuilder salida = new StringBuilder();
 		salida.append(bean.getClass().getName());
 		try {
-			Map<String, Object> p1 = BeanUtils.describe(bean);
+			Map<String, Object> p1 = PropertyUtils.describe(bean);
 			for (Map.Entry<String, Object> propE : p1.entrySet()) {
 				salida.append(" - " + propE.getKey() + ": " + propE.getValue());
 			}
@@ -142,11 +141,10 @@ public class Beans {
 		return salida.toString();
 	}
 
-	@SuppressWarnings("unchecked")
 	public static boolean equals(Object b1, Object b2) {
 		try {
-			Map<String, Object> p1 = BeanUtils.describe(b1);
-			Map<String, Object> p2 = BeanUtils.describe(b2);
+			Map<String, Object> p1 = PropertyUtils.describe(b1);
+			Map<String, Object> p2 = PropertyUtils.describe(b2);
 			for (String prop : p1.keySet()) {
 				if (!p1.get(prop).equals(p2.get(prop))) {
 					return false;
@@ -201,9 +199,7 @@ public class Beans {
 	 * @param bean
 	 * @throws Exception
 	 */
-	public static void stripToNullStringProperties(Object bean)
-			throws Exception {
-		@SuppressWarnings("unchecked")
+	public static void stripToNullStringProperties(Object bean) throws Exception {
 		Map<String, Object> desc = PropertyUtils.describe(bean);
 		for (String prop : desc.keySet()) {
 			if (String.class.equals(PropertyUtils.getPropertyType(bean, prop))) {
@@ -219,7 +215,6 @@ public class Beans {
 		}
 	}
 
-	@SuppressWarnings("unchecked")
 	public static void copyProperties(Object dest, Object orig){
 		try {
 			log.debug("copyProperties requested from " + orig + " to " + dest);

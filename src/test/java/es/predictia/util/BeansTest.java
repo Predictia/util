@@ -3,9 +3,8 @@ package es.predictia.util;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-import junit.framework.Assert;
-
 import org.apache.commons.beanutils.PropertyUtils;
+import org.junit.Assert;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -8,8 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-import junit.framework.Assert;
-
+import org.junit.Assert;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -127,7 +126,7 @@ public class TableTests {
 		Collection<Map<String, Integer>> tableData = getRandomData(numberOfRows, Iterables.concat(idxCols, otherCols));
 		IndexedTable<Integer> table = new IndexedTable<Integer>(tableData, idxCols);
 		
-		Stopwatch c = new Stopwatch().start();
+		Stopwatch c = Stopwatch.createStarted();
 		Random random = new Random();
 		for(int i=0;i<numberOfQuerys;i++){
 			Map<String, Integer> randomSearch = new HashMap<String, Integer>();
