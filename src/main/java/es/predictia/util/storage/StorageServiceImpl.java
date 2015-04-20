@@ -5,12 +5,11 @@ import static org.apache.commons.io.FilenameUtils.getExtension;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.UUID;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.google.common.hash.HashCode;
-import com.google.common.hash.Hashing;
 import com.google.common.io.Files;
 
 /**
@@ -35,17 +34,32 @@ public class StorageServiceImpl implements StorageService{
 		if(!input.exists()){
 			throw new FileNotFoundException("Input file does not exist: "+input.getAbsolutePath());
 		}
-		HashCode hashByte = Files.hash(input, Hashing.md5());
-		String hash = hashByte.toString();
-		File firstDir = new File(baseFolder,hash.substring(0,2));
-		File secondDir = new File(firstDir,hash.substring(2,4));
-		createDir(secondDir);
-		File result = new File(secondDir,hash + "." + getExtension(input.getAbsolutePath()));
+		String extension = getExtension(input.getAbsolutePath());
+		File result = createNewRandomFile(extension);
+		LOGGER.debug("Storing " + input + " at: " + result);
 		Files.asByteSource(input).copyTo(Files.asByteSink(result));
 		if(!result.exists()){
 			throw new IOException("Output file does not exist: "+result.getAbsolutePath());
 		}
 		return result;
+	}
+	
+	private File createNewRandomFile(String extension) throws IOException{
+		File result;
+		do{
+			result = createRandomFile(extension);
+		}while(result.exists());
+		return result;
+	}
+	
+	private File createRandomFile(String extension) throws IOException{
+		String hash = UUID.randomUUID().toString().replaceAll("-", "");
+		File dir = baseFolder;
+		for(int i = 0; i < dirLevels ; i++){
+			dir = new File(dir, hash.substring(i * dirLength, (i+1) * dirLength));
+		}
+		createDir(dir);
+		return new File(dir, hash.substring(dirLevels * dirLength) + "." + extension);
 	}
 	
 	private static void createDir(File dir) throws IOException{
@@ -63,6 +77,10 @@ public class StorageServiceImpl implements StorageService{
 	}
 	
 	public void init() throws Exception {
+		if(dirLevels < 0) throw new IllegalArgumentException("Number of dir levels must be positive");
+		if(dirLevels > 0){
+			if(dirLength < 1) throw new IllegalArgumentException("Number of dir length must be greater than zero");
+		}
 		initBaseFolder();
 	}
 
@@ -87,6 +105,25 @@ public class StorageServiceImpl implements StorageService{
 		}
 		this.baseFolder = baseFolder;
 		LOGGER.info("Using storage folder: " + baseFolder);
+	}
+
+	
+	private int dirLevels = 2;
+	
+	/** Level of directory depth for file storage 
+	 * @param dirLevels
+	 */
+	public void setDirLevels(int dirLevels) {
+		this.dirLevels = dirLevels;
+	}
+
+	private int dirLength = 2;
+	
+	/**
+	 * @param dirLength Length of directory names
+	 */
+	public void setDirLength(int dirLength) {
+		this.dirLength = dirLength;
 	}
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(StorageServiceImpl.class);

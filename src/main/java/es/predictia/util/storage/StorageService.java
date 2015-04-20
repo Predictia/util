@@ -9,16 +9,26 @@ import java.io.IOException;
  */
 public interface StorageService {
 
+	/**
+	 * @param realPath
+	 *            as returned from {@link #storeFile(File)}
+	 * @return path in a portable fashion, that can be restored back to a real
+	 *         {@link File} using {@link #expandFilePath(String)}
+	 * @see #expandFilePath(String)
+	 */
 	public String relativeFilePath(File realPath);
 	
+	/** Complementary method to {@link #relativeFilePath(File)}
+	 * @see #relativeFilePath(File)
+	 */
 	public File expandFilePath(String relativePath);
 	
 	/**
 	 * @param input file to save
 	 * @return New file in storage folder
 	 * @throws IOException
+	 * @see {@link #relativeFilePath(File)}
 	 */
 	public File storeFile(File externalFile) throws IOException;
-	
 	
 }
