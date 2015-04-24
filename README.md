@@ -13,7 +13,7 @@ You will need to add to your project's pom.xml file the repository:
     <repositories>
        <repository>
           <id>predictia-public-releases</id>
-          <url>https://raw.github.com/Predictia/maven-repo/master/releases</url>
+          <url>https://raw.githubusercontent.com/Predictia/maven-repo/master/releases</url>
        </repository>
     </repositories>
 
