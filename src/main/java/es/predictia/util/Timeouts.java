@@ -12,8 +12,14 @@ import org.slf4j.LoggerFactory;
 
 public class Timeouts {
 
-	public interface AwakeningCondition{
-		public boolean wakeUp() throws Exception;
+	public interface AwakeningCondition {
+		
+		/** 
+		 * @return true if sleep should end
+		 * @throws Throwable if check fails, and stops sleeping  
+		 */
+		public boolean wakeUp() throws Throwable;
+		
 	}
 	
 	/** Sleeps checking for an {@link AwakeningCondition}, with a maximum sleeping time (timeOut)
@@ -25,15 +31,15 @@ public class Timeouts {
 	 * @throws ExecutionException
 	 */
 	public static void sleepWithTimeOut(final long sleepInterval, final AwakeningCondition condition, long timeOut, TimeUnit timeOutUnit) throws InterruptedException, ExecutionException{
-		Exception e = Timeouts.callWithTimeOut(new Callable<Exception>() {
+		Throwable e = Timeouts.callWithTimeOut(new Callable<Throwable>() {
 			@Override
-			public Exception call() throws Exception {
+			public Throwable call() throws Exception {
 				try{
 					do{
 						Thread.sleep(sleepInterval);
 					}while(!condition.wakeUp());
-				}catch(Exception e){
-					LOGGER.warn("Exception while waiting for process: " + e.getMessage());
+				}catch(Throwable e){
+					LOGGER.info("Exception while waiting for process: " + e.getMessage());
 					return e;
 				}
 				return null;
@@ -41,7 +47,7 @@ public class Timeouts {
 		}, timeOut, timeOutUnit);
 		if(e instanceof InterruptedException){
 			throw (InterruptedException) e;
-		}else if(e instanceof Exception){
+		}else if(e != null){
 			throw new ExecutionException(e);
 		}
 	}
@@ -82,6 +88,7 @@ public class Timeouts {
 			executorService.shutdownNow();
 		}
 	}
+	
 	private static final Logger LOGGER = LoggerFactory.getLogger(Timeouts.class);
 	
 }
