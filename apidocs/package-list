@@ -2,5 +2,9 @@ es.predictia.util
 es.predictia.util.backoff
 es.predictia.util.comparator
 es.predictia.util.date
+es.predictia.util.parameter
 es.predictia.util.parser
+es.predictia.util.property
+es.predictia.util.storage
 es.predictia.util.table
+es.predictia.util.time
