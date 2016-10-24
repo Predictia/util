@@ -31,6 +31,9 @@ public class Timeouts {
 	 * @throws ExecutionException
 	 */
 	public static void sleepWithTimeOut(final long sleepInterval, final AwakeningCondition condition, long timeOut, TimeUnit timeOutUnit) throws InterruptedException, ExecutionException{
+		if(TimeUnit.MILLISECONDS.convert(timeOut, timeOutUnit) < sleepInterval){
+			throw new IllegalArgumentException("Sleep interval should be greather than timeout");
+		}
 		Throwable e = Timeouts.callWithTimeOut(new Callable<Throwable>() {
 			@Override
 			public Throwable call() throws Exception {

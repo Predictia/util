@@ -12,6 +12,16 @@ import org.slf4j.LoggerFactory;
 
 public class TimeoutsTest {
 
+	@Test(expected=IllegalArgumentException.class)
+	public void badArgumentSleepTimeout() throws Exception{
+		Timeouts.sleepWithTimeOut(1000, new Timeouts.AwakeningCondition() {
+			@Override
+			public boolean wakeUp() throws Throwable {
+				return true;
+			}
+		}, 50, TimeUnit.MILLISECONDS);
+	}
+	
 	@Test(expected=ExecutionException.class)
 	public void failingSleepTimeout() throws Exception{
 		Timeouts.sleepWithTimeOut(10, new Timeouts.AwakeningCondition() {
@@ -43,7 +53,7 @@ public class TimeoutsTest {
 				LOGGER.info("check for sleep");
 				return atomicLong.incrementAndGet() == 2;
 			}
-		}, 100, TimeUnit.MILLISECONDS);
+		}, 1, TimeUnit.MINUTES);
 	}
 	
 	@Test(expected=InterruptedException.class)
