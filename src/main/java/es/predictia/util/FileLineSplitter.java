@@ -13,7 +13,6 @@ import java.util.List;
 import java.util.Set;
 
 import com.google.common.collect.Lists;
-import com.google.common.io.CharSink;
 import com.google.common.io.CharStreams;
 import com.google.common.io.OutputSupplier;
 

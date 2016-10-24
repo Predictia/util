@@ -47,6 +47,7 @@ public class Iterables {
 		}
 	}
 	
+	@SafeVarargs
 	public static <T> List<T> newList(Class<T> clazz, T... els){
 		if(els != null){
 			return Lists.newArrayList(els);
