@@ -1,10 +1,9 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>es.predictia</groupId>
 	<artifactId>util</artifactId>
 	<packaging>jar</packaging>
-	<version>0.0.69-SNAPSHOT</version>
+	<version>0.0.70-SNAPSHOT</version>
 	<name>util</name>
 	<url>http://www.predictia.es</url>
 	<properties>
@@ -19,7 +18,8 @@
 		<url>https://github.com/Predictia/util</url>
 		<connection>scm:git:git://github.com/Predictia/util.git</connection>
 		<developerConnection>scm:git:git@github.com:Predictia/util.git</developerConnection>
-	</scm>
+	  <tag>HEAD</tag>
+  </scm>
 	<developers>
 		<developer>
 			<email>max@predictia.es</email>
@@ -101,6 +101,9 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
+				<configuration>
+					<failOnError>false</failOnError>
+				</configuration>
 				<executions>
 					<execution>
 						<id>attach-javadocs</id>
@@ -113,7 +116,7 @@
 			<plugin>
 				<groupId>com.github.github</groupId>
 				<artifactId>site-maven-plugin</artifactId>
-				<version>0.8</version>
+				<version>0.12</version>
 				<configuration>
 					<message>Creating site for ${project.version}</message>
 				</configuration>

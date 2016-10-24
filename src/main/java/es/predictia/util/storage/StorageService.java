@@ -24,10 +24,10 @@ public interface StorageService {
 	public File expandFilePath(String relativePath);
 	
 	/**
-	 * @param input file to save
+	 * @param externalFile input file to save
 	 * @return New file in storage folder
 	 * @throws IOException
-	 * @see {@link #relativeFilePath(File)}
+	 * @see #relativeFilePath(File)
 	 */
 	public File storeFile(File externalFile) throws IOException;
 	
