@@ -9,7 +9,7 @@ import es.predictia.util.backoff.ObjectFactory;
 
 public class RetryableCondition<T> implements AwakeningCondition {
 
-	public final ObjectFactory<T> objectFactory;
+	private final ObjectFactory<T> objectFactory;
 	
 	private final Predicate<T> validObject;
 	
