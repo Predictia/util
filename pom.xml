@@ -3,7 +3,7 @@
 	<groupId>es.predictia</groupId>
 	<artifactId>util</artifactId>
 	<packaging>jar</packaging>
-	<version>0.1.1-SNAPSHOT</version>
+	<version>0.1.2</version>
 	<name>util</name>
 	<url>http://www.predictia.es</url>
 	<properties>
@@ -18,7 +18,7 @@
 		<url>https://github.com/Predictia/util</url>
 		<connection>scm:git:git://github.com/Predictia/util.git</connection>
 		<developerConnection>scm:git:git@github.com:Predictia/util.git</developerConnection>
-    <tag>HEAD</tag>
+		<tag>HEAD</tag>
   </scm>
 	<developers>
 		<developer>
