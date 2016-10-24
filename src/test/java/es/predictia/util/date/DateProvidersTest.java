@@ -2,10 +2,9 @@ package es.predictia.util.date;
 
 import java.util.List;
 
-import junit.framework.Assert;
-
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
+import org.junit.Assert;
 import org.junit.Test;
 
 public class DateProvidersTest {

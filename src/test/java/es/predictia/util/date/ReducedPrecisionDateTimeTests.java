@@ -1,12 +1,8 @@
 package es.predictia.util.date;
 
-import junit.framework.Assert;
-
 import org.joda.time.DateTime;
+import org.junit.Assert;
 import org.junit.Test;
-
-import es.predictia.util.date.Pattern;
-import es.predictia.util.date.ReducedPrecisionDateTime;
 
 public class ReducedPrecisionDateTimeTests {
 

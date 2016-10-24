@@ -2,11 +2,10 @@ package es.predictia.util;
 
 import java.util.List;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 import com.google.common.collect.Lists;
-
-import junit.framework.Assert;
 
 public class MetadataTest {
 

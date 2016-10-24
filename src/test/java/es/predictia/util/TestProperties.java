@@ -1,15 +1,15 @@
 package es.predictia.util;
 
+import static es.predictia.util.PropertyDefinitions.findPropertyValue;
+import static es.predictia.util.PropertyDefinitions.updateLinePropertyValue;
+
 import java.io.File;
 import java.io.FileReader;
 import java.io.StringReader;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-import junit.framework.Assert;
-import static es.predictia.util.PropertyDefinitions.updateLinePropertyValue;
-import static es.predictia.util.PropertyDefinitions.findPropertyValue;
-
+import org.junit.Assert;
 import org.junit.Test;
 
 import com.google.common.base.Charsets;

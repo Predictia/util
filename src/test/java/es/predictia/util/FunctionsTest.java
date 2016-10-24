@@ -3,9 +3,8 @@ package es.predictia.util;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.Assert;
 import org.junit.Test;
-
-import junit.framework.Assert;
 
 import com.google.common.collect.Lists;
 
@@ -62,7 +61,7 @@ public class FunctionsTest {
 		);
 		list2.add(Double.valueOf(4));
 		Assert.assertEquals(
-			Double.valueOf(4+2) / Integer.valueOf(3), 
+			Double.valueOf(Double.valueOf(4+2) / Integer.valueOf(3)), 
 			Functions.avg.apply(list2)
 		);
 	}
